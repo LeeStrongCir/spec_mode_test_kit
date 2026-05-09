@@ -1,13 +1,13 @@
 ---
-description: 执行测试计划工作流，使用计划模板生成设计工件。
+description: 执行创建测试计划工作流，使用计划模板构建特性测试设计方案。
 handoffs: 
-  - label: 创建任务
+  - label: 创建测试任务
     agent: speckit-test.tasks
-    prompt: Break the plan into tasks
+    prompt: 将测试设计方案拆分为具体任务
     send: true
   - label: 创建检查清单
     agent: speckit-test.checklist
-    prompt: Create a checklist for the following domain...
+    prompt: 为以下场景创建一个检查清单...
 ---
 
 ## 用户输入

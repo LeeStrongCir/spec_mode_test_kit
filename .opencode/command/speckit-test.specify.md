@@ -1,9 +1,9 @@
 ---
 description: 根据自然语言描述的特性，创建或更新特性测试规格说明。
 handoffs: 
-  - label: 构建测试计划
+  - label: 创建测试计划
     agent: speckit-test.plan
-    prompt: 为该规格创建测试计划。我正在使用以下技术栈进行构建……
+    prompt: 为该规格创建测试计划（构建测试设计方案）。我正在使用以下技术栈进行构建……
   - label: 澄清规格测试需求
     agent: speckit-test.clarify
     prompt: 澄清规格说明的测试需求
