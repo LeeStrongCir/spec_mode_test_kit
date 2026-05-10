@@ -1,0 +1,11 @@
+node_modules/
+dist/
+test-results/
+playwright-report/
+tests/reports/html-report/
+tests/reports/junit.xml
+tests/reports/summary.md
+tests/reports/incidents/*.md
+.env
+.env.*
+npm-debug.log*
