@@ -1,13 +1,13 @@
 ---
-description: 根据可用的测试计划与设计工件，生成可执行、依赖有序的 tasks.md。
+description: 根据可用的测试计划与设计方案，生成可执行、按依赖关系排序的任务安排。
 handoffs: 
-  - label: 一致性分析
+  - label: 测试一致性分析
     agent: speckit-test.analyze
-    prompt: Run a project analysis for consistency
+    prompt: 运行项目测试分析以确保测试一致性
     send: true
   - label: 实施测试
     agent: speckit-test.implement
-    prompt: Start the test implementation in phases
+    prompt: 分阶段开始测试实施
     send: true
 ---
 
@@ -17,11 +17,11 @@ handoffs:
 $ARGUMENTS
 ```
 
-在继续之前，你 **MUST** 考虑用户输入（如果不为空）。
+在继续之前，你**必须**考虑用户输入（如果不为空）。
 
 ## 概要
 
-1. **Setup**：从仓库根目录运行 `.specify/scripts/bash/setup-tasks.sh --json` 并解析 `FEATURE_DIR`, `TASKS_TEMPLATE`, 和 `AVAILABLE_DOCS` 列表。`FEATURE_DIR` 和 `TASKS_TEMPLATE` 在提供时必须为 absolute paths。`AVAILABLE_DOCS` 是 `FEATURE_DIR` 下可用文档的名称/相对路径列表（如 `research.md` 等）。对于参数中的单引号（如 "I'm Groot"），使用转义语法：`'I'\''m Groot'`（或尽可能使用双引号：`"I'm Groot"`）。
+1. **设置**：从仓库根目录运行 `.specify/scripts/bash/setup-tasks.sh --json` 并解析 `FEATURE_DIR`, `TASKS_TEMPLATE`, 和 `AVAILABLE_DOCS` 列表。`FEATURE_DIR` 和 `TASKS_TEMPLATE` 在提供时必须为 absolute paths。`AVAILABLE_DOCS` 是 `FEATURE_DIR` 下可用文档的名称/相对路径列表（如 `research.md` 等）。对于参数中的单引号（如 "I'm Groot"），使用转义语法：`'I'\''m Groot'`（或尽可能使用双引号：`"I'm Groot"`）。
 
 2. **加载测试计划与设计文档**：从 `FEATURE_DIR` 中读取：
    - **必需**：`plan.md`（测试策略、工具链、环境配置）、`spec.md`（测试场景、优先级）

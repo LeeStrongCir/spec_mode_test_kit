@@ -4,9 +4,9 @@ handoffs:
   - label: 创建测试计划
     agent: speckit-test.plan
     prompt: 为该规格创建测试计划（构建测试设计方案）。我正在使用以下技术栈进行构建……
-  - label: 澄清规格测试需求
+  - label: 澄清需求规格
     agent: speckit-test.clarify
-    prompt: 澄清规格说明的测试需求
+    prompt: 澄清需求规格
     send: true
 ---
 
@@ -16,7 +16,7 @@ handoffs:
 $ARGUMENTS
 ```
 
-在继续之前，你 **MUST** 考虑用户输入（如果不为空）。
+在继续之前，你**必须**考虑用户输入（如果不为空）。
 
 ## 概要
 
