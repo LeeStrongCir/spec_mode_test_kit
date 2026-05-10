@@ -116,7 +116,7 @@
 ### Fixture 设计
 
 ```python
-# tests/integration/conftest.py - 集成测试 fixtures
+# tests/integration/001-lecs-host-management/conftest.py - 集成测试 fixtures
 
 import pytest
 from sqlalchemy import create_engine
@@ -184,7 +184,7 @@ def lecs_host_factory(db_session, test_user):
 ```
 
 ```typescript
-// tests/e2e/fixtures/lecs-hosts-fixtures.ts - E2E 测试 fixtures
+// tests/e2e/001-lecs-host-management/fixtures/lecs-hosts-fixtures.ts - E2E 测试 fixtures
 
 import { test as base, expect } from '@playwright/test';
 
@@ -231,40 +231,45 @@ specs/001-lecs-host-management/
 
 ```text
 tests/
-├── cases/                          # 测试用例（Markdown 规格格式）
-│   ├── sc-01-search-navigation.md
-│   ├── sc-02-list-operation-matrix.md
-│   ├── sc-03-create-host.md
-│   ├── sc-04-lifecycle-control.md
-│   ├── sc-05-safe-delete.md
-│   └── sc-06-api-management.md
+├── cases/                              # 测试用例（Markdown 规格格式）
+│   ├── 001-lecs-host-management/       # 按特性目录分组
+│   │   ├── sc-01-search-navigation.md
+│   │   ├── sc-02-list-operation-matrix.md
+│   │   ├── sc-03-create-host.md
+│   │   ├── sc-04-lifecycle-control.md
+│   │   ├── sc-05-safe-delete.md
+│   │   └── sc-06-api-management.md
+│   └── .../
 │
-├── integration/                    # 集成测试（pytest）
-│   ├── conftest.py
-│   ├── test_lecs_hosts_list.py
-│   ├── test_lecs_hosts_create.py
-│   ├── test_lecs_hosts_stop.py
-│   ├── test_lecs_hosts_start.py
-│   ├── test_lecs_hosts_delete.py
-│   ├── test_lecs_hosts_auth.py
-│   ├── test_lecs_hosts_pricing.py
-│   ├── test_lecs_hosts_validation.py
-│   ├── test_lecs_hosts_async.py
-│   └── test_lecs_hosts_audit.py
+├── integration/                        # 集成测试（pytest）
+│   ├── 001-lecs-host-management/       # 按特性目录分组
+│   │   ├── conftest.py
+│   │   ├── test_lecs_hosts_list.py
+│   │   ├── test_lecs_hosts_create.py
+│   │   ├── test_lecs_hosts_stop.py
+│   │   ├── test_lecs_hosts_start.py
+│   │   ├── test_lecs_hosts_delete.py
+│   │   ├── test_lecs_hosts_auth.py
+│   │   ├── test_lecs_hosts_pricing.py
+│   │   ├── test_lecs_hosts_validation.py
+│   │   ├── test_lecs_hosts_async.py
+│   │   └── test_lecs_hosts_audit.py
+│   └── .../
 │
-├── e2e/                            # Playwright 端到端测试
-│   ├── lecs-hosts/
+├── e2e/                                # Playwright 端到端测试
+│   ├── 001-lecs-host-management/       # 按特性目录分组
+│   │   ├── fixtures/
+│   │   │   ├── lecs-hosts-fixtures.ts
+│   │   │   └── data/
+│   │   │       └── lecs-host-states.json
 │   │   ├── test_sc01_search_navigation.spec.ts
 │   │   ├── test_sc02_list_operation_matrix.spec.ts
 │   │   ├── test_sc03_create_host.spec.ts
 │   │   ├── test_sc04_lifecycle_control.spec.ts
 │   │   └── test_sc05_safe_delete.spec.ts
-│   └── fixtures/
-│       ├── lecs-hosts-fixtures.ts
-│       └── data/
-│           └── lecs-host-states.json
+│   └── .../
 │
-├── fixtures/                       # 可复用的测试基础设施
+├── fixtures/                           # 可复用的测试基础设施
 │   ├── factories/
 │   │   ├── user_factory.py
 │   │   └── lecs_host_factory.py
@@ -272,7 +277,7 @@ tests/
 │       ├── billing_service_mock.py
 │       └── task_queue_mock.py
 │
-└── conftest.py                     # 全局 pytest 配置
+└── conftest.py                         # 全局 pytest 配置
 ```
 
 ## 测试环境
@@ -304,8 +309,8 @@ CELERY_TASK_ALWAYS_EAGER=false  # 集成测试中需要异步行为
 | 文件 | 用途 |
 |------|------|
 | `tests/conftest.py` | 全局 pytest fixture（DB、用户、工厂） |
-| `tests/integration/conftest.py` | 集成测试级 fixture（认证客户端、主机工厂） |
-| `tests/e2e/fixtures/lecs-hosts-fixtures.ts` | Playwright E2E fixture（已登录页面、预置数据页面） |
+| `tests/integration/001-lecs-host-management/conftest.py` | 集成测试级 fixture（认证客户端、主机工厂） |
+| `tests/e2e/001-lecs-host-management/fixtures/lecs-hosts-fixtures.ts` | Playwright E2E fixture（已登录页面、预置数据页面） |
 | `pytest.ini` / `pyproject.toml` | pytest 配置（标记、并行、覆盖率） |
 | `playwright.config.ts` | Playwright 配置（浏览器、超时、重试） |
 
@@ -316,7 +321,7 @@ CELERY_TASK_ALWAYS_EAGER=false  # 集成测试中需要异步行为
 | 基准测试数据 | Factory Boy（LecsHostFactory、UserFactory） | 每次测试运行前 | 事务回滚自动清理 |
 | 用户测试数据 | UserFactory（role=user/admin） | 按需创建 | 测试结束后自动删除 |
 | 外部服务 Mock 数据 | `tests/fixtures/mocks/` 中定义 | 手动更新 | 版本控制管理 |
-| E2E 测试账号 | 预置种子脚本 `tests/e2e/fixtures/seed-e2e-data.py` | E2E 运行前 | E2E 结束后清理 |
+| E2E 测试账号 | 预置种子脚本 `tests/e2e/001-lecs-host-management/fixtures/seed-e2e-data.py` | E2E 运行前 | E2E 结束后清理 |
 
 ### 环境隔离策略
 

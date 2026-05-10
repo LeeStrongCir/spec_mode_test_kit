@@ -144,7 +144,7 @@ async def async_client():
 ### 文档结构（本特性）
 
 ```text
-specs/[###-特性名称]/
+specs/[###-feature]/
 ├── plan.md              # 本文件（由 /speckit.plan 命令输出）
 ├── research.md          # 阶段 0 输出（技术调研）
 └── tasks.md             # 测试执行任务分解（由 /speckit.tasks 命令生成）
@@ -154,20 +154,28 @@ specs/[###-特性名称]/
 
 ```text
 tests/
-├── cases/                        # 测试用例（Markdown 规格格式）
-│   ├── sc-01-[用例名称].md       # 每个用例对应一个场景，包含前置条件/步骤/预期结果
-│   └── sc-NN-[用例名称].md
+├── cases/                              # 测试用例（Markdown 规格格式）
+│   ├── [###-feature]/                  # 按特性目录分组
+│   │   ├── sc-01-[用例名称].md         # 每个用例对应一个场景，包含前置条件/步骤/预期结果
+│   │   └── sc-NN-[用例名称].md
+│   └── .../
 │
-├── e2e/                          # Playwright 端到端测试脚本
-│   ├── [feature]/                # 按功能域分组
-│   │   ├── test_sc01_xxx.spec.ts # 测试脚本与 cases/ 中的用例按场景编号对应
+├── integration/                        # 集成测试脚本
+│   ├── [###-feature]/                  # 按特性目录分组
+│   │   ├── test_sc01_xxx.py            # 测试脚本与 cases/ 中的用例按场景编号对应
+│   │   └── test_scNN_xxx.py
+│   └── .../
+│
+├── e2e/                                # Playwright 端到端测试脚本
+│   ├── [###-feature]/                  # 按特性目录分组
+│   │   ├── test_sc01_xxx.spec.ts       # 测试脚本与 cases/ 中的用例按场景编号对应
 │   │   └── test_scNN_xxx.spec.ts
 │   └── .../
 │
-├── fixtures/                     # 可复用的测试基础设施
-│   ├── base-fixture.ts           # 基础 fixture（浏览器上下文、页面对象）
-│   ├── data/                     # 测试数据（JSON/YAML）
-│   └── mocks/                    # 外部服务 Mock 定义
+├── fixtures/                           # 可复用的测试基础设施
+│   ├── base-fixture.ts                 # 基础 fixture（浏览器上下文、页面对象）
+│   ├── data/                           # 测试数据（JSON/YAML）
+│   └── mocks/                          # 外部服务 Mock 定义
 ```
 
 ## 测试环境
