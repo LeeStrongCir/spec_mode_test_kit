@@ -9,3 +9,4 @@ tests/reports/incidents/*.md
 .env
 .env.*
 npm-debug.log*
+backend/

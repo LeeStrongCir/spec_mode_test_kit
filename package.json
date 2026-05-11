@@ -1,14 +1,33 @@
 {
-  "name": "lee-cloud-test-suite",
+  "name": "spec_mode_test_kit",
   "version": "1.0.0",
-  "description": "Test suite for Lee Cloud Console - functional tests",
-  "private": true,
-  "scripts": {
-    "test": "playwright test",
-    "test:report": "playwright test --reporter=html",
-    "install:browsers": "playwright install"
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup:deps": "npx playwright install --with-deps chromium",
+    "setup:browsers": "npx playwright install chromium",
+    "test:e2e": "npx playwright test",
+    "test:e2e:headed": "npx playwright test --headed",
+    "test:e2e:ui": "npx playwright test --ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeStrongCir/spec_mode_test_kit.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/LeeStrongCir/spec_mode_test_kit/issues"
+  },
+  "homepage": "https://github.com/LeeStrongCir/spec_mode_test_kit#readme",
   "devDependencies": {
-    "@playwright/test": "^1.49.0"
+    "@playwright/test": "^1.59.1",
+    "typescript": "^6.0.3"
   }
 }
