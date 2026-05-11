@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制台 - Lee云</title>
+    <link rel="stylesheet" href="/static/css/console.css">
+</head>
+<body>
+    <div class="console-page">
+        <header class="banner">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                Lee云
+                <span style="margin: 0 8px; color: var(--lc-border-light);">|</span>
+                <strong style="font-weight: 700; font-size: 15px; color: var(--lc-text-primary);">控制台</strong>
+            </div>
+            <div class="banner-links">
+                <div class="user-info">
+                    <a href="/profile">{{ user.username if user else 'admin' }}_00861234xxx_xx</a>
+                    <span class="user-avatar">👤</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="console-main console-search-page">
+            <div class="search-container">
+                <div class="search-wrapper" id="searchWrapper">
+                    <div class="search-box">
+                        <span class="search-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </span>
+                        <input
+                            type="text"
+                            class="search-input"
+                            id="searchInput"
+                            placeholder="搜索云服务、文档、API..."
+                            autocomplete="off"
+                        >
+                        <button class="search-close-btn" id="searchClearBtn" type="button">✕</button>
+                    </div>
+                    <div class="search-dropdown" id="searchDropdown"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <span>©2026 Leecloud.com 版权所有</span>
+            <div class="footer-links-group">
+                <a href="/legal">法律声明</a>
+                <a href="/privacy">隐私政策声明</a>
+                <a href="/cookies">Cookies</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    const serviceCatalog = [
+            { category: '控制台', items: [
+                { name: 'LECS主机', action: '计算', type: 'ecs', url: '/console/lecs-hosts/list' },
+                { name: '弹性云服务器 ECS', action: '计算', type: 'ecs' },
+                { name: '裸金属服务器 BMS', action: '计算', type: 'ecs' },
+                { name: '弹性伸缩 AS', action: '计算', type: 'ecs' },
+                { name: 'Flexus应用服务器L实例', action: 'Flexus云服务', type: 'flexus' },
+                { name: 'Flexus云服务器X实例', action: 'Flexus云服务', type: 'flexus' },
+                { name: '交换数据空间 EDS', action: '大数据', type: 'data' },
+                { name: '区块链服务 BCS', action: '区块链', type: 'blockchain' },
+                { name: '弹性文件服务 SFS', action: '存储', type: 'storage' },
+                { name: '虚拟私有云 VPC', action: '网络', type: 'network' },
+                { name: '对象存储服务 OBS', action: '存储', type: 'storage' },
+            ]},
+            { category: '快捷操作', items: [
+                { name: '续费', action: '弹性云服务器 ECS' },
+                { name: '删除', action: '弹性云服务器 ECS' },
+                { name: '开机', action: '弹性云服务器 ECS' },
+                { name: '退订', action: '弹性云服务器 ECS' },
+                { name: '扩容', action: '弹性云服务器 ECS' },
+                { name: '关机', action: '弹性云服务器 ECS' },
+            ]},
+            { category: '文档', items: [
+                { name: '什么是弹性云服务器?', action: '弹性云服务器 ECS' },
+                { name: '无法登录到Windows云服务器怎么办?', action: '弹性云服务器 ECS' },
+                { name: '网站无法访问怎么办?', action: '弹性云服务器 ECS' },
+                { name: '创建ECS高频场景示例', action: '弹性云服务器 ECS' },
+                { name: 'Ping不通或丢包时如何进行链路测试?', action: '弹性云服务器 ECS' },
+                { name: '快速购买ECS', action: '弹性云服务器 ECS' },
+            ]},
+        ];
+
+        const serviceIcons = {
+            ecs: { bg: '#E87040', svg: '<rect x="3" y="5" width="14" height="10" rx="1"/><line x1="5" y1="8" x2="15" y2="8"/><line x1="5" y1="12" x2="12" y2="12"/>' },
+            flexus: { bg: '#E87040', svg: '<circle cx="10" cy="10" r="6"/><circle cx="10" cy="10" r="2"/>' },
+            data: { bg: '#43AE3E', svg: '<ellipse cx="10" cy="6" rx="6" ry="3"/><ellipse cx="10" cy="14" rx="6" ry="3"/><line x1="4" y1="6" x2="4" y2="14"/><line x1="16" y1="6" x2="16" y2="14"/>' },
+            blockchain: { bg: '#2F54EB', svg: '<rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/>' },
+            storage: { bg: '#E8A040', svg: '<path d="M5 4h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M3 9h14"/>' },
+            network: { bg: '#2F54EB', svg: '<circle cx="10" cy="6" r="3"/><line x1="10" y1="9" x2="6" y2="15"/><line x1="10" y1="9" x2="14" y2="15"/><circle cx="6" cy="15" r="2"/><circle cx="14" cy="15" r="2"/>' },
+        };
+
+        const defaultIcon = { bg: '#999', svg: '<circle cx="10" cy="10" r="6"/>' };
+
+        function getServiceIcon(type) {
+            return serviceIcons[type] || defaultIcon;
+        }
+
+        const searchInput = document.getElementById('searchInput');
+        const searchDropdown = document.getElementById('searchDropdown');
+        const searchClearBtn = document.getElementById('searchClearBtn');
+        const searchWrapper = document.getElementById('searchWrapper');
+
+        searchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            searchClearBtn.style.display = query ? 'flex' : 'none';
+
+            if (!query) {
+                searchDropdown.innerHTML = '';
+                searchDropdown.style.display = 'none';
+                searchWrapper.classList.remove('active');
+                return;
+            }
+
+            const results = searchCatalog(query);
+            renderResults(results);
+        });
+
+        searchInput.addEventListener('focus', function() {
+            if (searchInput.value.trim()) {
+                searchWrapper.classList.add('active');
+            }
+        });
+
+        searchClearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            searchDropdown.innerHTML = '';
+            searchDropdown.style.display = 'none';
+            searchWrapper.classList.remove('active');
+            this.style.display = 'none';
+            searchInput.focus();
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!searchWrapper.contains(e.target)) {
+                searchDropdown.style.display = 'none';
+                searchWrapper.classList.remove('active');
+            }
+        });
+
+        function searchCatalog(query) {
+            const q = query.toLowerCase();
+            const results = [];
+
+            serviceCatalog.forEach(group => {
+                const matchedItems = group.items.filter(item =>
+                    item.name.toLowerCase().includes(q) ||
+                    item.action.toLowerCase().includes(q)
+                );
+                if (matchedItems.length > 0) {
+                    results.push({
+                        category: group.category,
+                        items: matchedItems
+                    });
+                }
+            });
+
+            return results;
+        }
+
+        function renderResults(results) {
+            if (results.length === 0) {
+                searchDropdown.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">
+                            <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                        </div>
+                        <div class="no-results-text">未搜索到相关内容</div>
+                    </div>
+                `;
+            } else {
+                const totalCount = results.reduce((sum, r) => sum + r.items.length, 0);
+                let html = `<div class="search-tabs">
+                    <span class="search-tab active">全部 <span class="tab-count">(${totalCount})</span></span>`;
+                results.forEach(r => {
+                    html += `<span class="search-tab">${r.category} <span class="tab-count">(${r.items.length})</span></span>`;
+                });
+                html += `</div>`;
+
+                results.forEach(group => {
+                    if (group.category === '快捷操作') {
+                        html += `<div class="result-group">
+                            <div class="result-group-header">
+                                <span>${group.category} <span class="count">(${group.items.length})</span></span>
+                                <span class="result-group-arrow">›</span>
+                            </div>
+                            <div class="quick-action-grid">`;
+                        group.items.forEach(item => {
+                            html += `<div class="quick-action-item">
+                                <span class="quick-action-name">${highlightMatch(item.name, searchInput.value)}</span>
+                                <span class="quick-action-service">${item.action}</span>
+                            </div>`;
+                        });
+                        html += `</div></div>`;
+                    } else if (group.category === '文档') {
+                        html += `<div class="result-group">
+                            <div class="result-group-header">
+                                <span>${group.category} <span class="count">(${group.items.length})</span></span>
+                                <span class="result-group-arrow">›</span>
+                            </div>
+                            <div class="docs-grid">`;
+                        group.items.forEach(item => {
+                            html += `<div class="docs-item">
+                                <span class="docs-item-name">${highlightMatch(item.name, searchInput.value)}</span>
+                                <span class="docs-item-service">${item.action}</span>
+                            </div>`;
+                        });
+                        html += `</div></div>`;
+                    } else {
+                        html += `<div class="result-group">
+                            <div class="result-group-header">
+                                <span>${group.category} <span class="count">(${group.items.length})</span></span>
+                                <span class="result-group-arrow">›</span>
+                            </div>`;
+                        group.items.forEach(item => {
+                            const iconInfo = getServiceIcon(item.type || '');
+                            const clickHandler = item.url ? ` onclick="window.location.href='${item.url}'"` : '';
+                            const cursor = item.url ? ' style="cursor:pointer"' : '';
+                            html += `<div class="result-item"${clickHandler}${cursor}>
+                                <div class="result-item-left">
+                                    <span class="result-item-icon" style="background:${iconInfo.bg}">
+                                        <svg viewBox="0 0 20 20" fill="none" stroke="white" stroke-width="1.5">${iconInfo.svg}</svg>
+                                    </span>
+                                    <span class="result-item-name">${highlightMatch(item.name, searchInput.value)}</span>
+                                </div>
+                                <span class="result-item-action">${item.action}${item.url ? ' →' : ''}</span>
+                            </div>`;
+                        });
+                        html += `</div>`;
+                    }
+                });
+
+                html += `<div class="search-footer">
+    <div class="feedback-actions">
+        <button class="feedback-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/><path d="M7 22H4a2 2 0 01-2-2v-7a2 2 0 012-2h3"/></svg>
+        </button>
+        <button class="feedback-btn" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 15v4a3 3 0 003 3l4-9V2H5.72a2 2 0 00-2 1.7l-1.38 9a2 2 0 002 2.3H10z"/><path d="M17 2h2.67A2.31 2.31 0 0122 4v7a2.31 2.31 0 01-2.33 2H17"/></svg>
+        </button>
+        <span class="feedback-separator"></span>
+    </div>
+    <a href="#" class="feedback-link">建议反馈</a>
+</div>`;
+
+                searchDropdown.innerHTML = html;
+            }
+
+            searchDropdown.style.display = 'block';
+            searchWrapper.classList.add('active');
+        }
+
+        function highlightMatch(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+    </script>
+</body>
+</html>

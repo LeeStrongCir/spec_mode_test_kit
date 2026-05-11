@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录 - Lee云</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="login-page">
+        <header class="banner">
+            <a href="/" class="logo">
+                <span class="logo-icon"></span>
+                Lee云
+            </a>
+            <nav class="banner-links">
+                <a href="/">首页</a>
+                <a href="/help">帮助中心</a>
+            </nav>
+        </header>
+
+        <main class="login-content">
+            <div class="login-left">
+                <div class="left-decoration" aria-hidden="true">
+                    <div class="deco-circle"></div>
+                    <div class="deco-rect"></div>
+                    <div class="deco-structure">
+                        <div class="dec-block block-top"></div>
+                        <div class="dec-block block-mid"></div>
+                        <div class="dec-block block-bot"></div>
+                        <div class="dec-glow glow-orange"></div>
+                        <div class="dec-glow glow-blue"></div>
+                        <div class="dec-glow glow-purple"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="login-right">
+                <div class="login-tabs">
+                    <span class="tab active">密码登录</span>
+                    <span class="tab">扫码登录</span>
+                </div>
+
+                <h1 class="login-title">Lee账号登录</h1>
+
+                {% if error %}
+                <div class="alert alert-error" role="alert">{{ error }}</div>
+                {% endif %}
+
+                <form method="POST" action="/api/auth/login">
+                    <div class="form-group">
+                        <label for="identifier">用户名/邮箱</label>
+                        <input type="text" id="identifier" name="identifier" placeholder="手机号/邮箱/用户名" required autocomplete="username" autofocus>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">密码</label>
+                        <input type="password" id="password" name="password" placeholder="密码" required autocomplete="current-password">
+                    </div>
+
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember_me" name="remember_me">
+                        <label for="remember_me">记住我</label>
+                    </div>
+
+                    <div id="buttonArea">
+                        <button type="submit">登 录</button>
+                    </div>
+                </form>
+
+                <div class="footer-links">
+                    <a href="/register">注册</a>
+                    <a href="/forgot-password">忘记密码</a>
+                    <a href="/forgot-username">忘记账号名</a>
+                </div>
+
+                <div class="divider-text">使用其他账号登录</div>
+
+                <div class="other-logins">
+                    <a href="/iam-login" class="iam-link">IAM用户</a>
+                    <span class="divider-pipe">|</span>
+                    <a href="/more-login" class="more-link">更多账号登录 ▾</a>
+                </div>
+
+                <p class="disclaimer">我们为您提供Lee账号服务，支持您使用Lee各产品。
+                    <a href="/more-info" class="learn-more">了解更多</a></p>
+            </div>
+        </main>
+
+        <footer class="page-footer">
+            <span class="footer-copyright">©2026 Leecloud.com 版权所有</span>
+            <div class="footer-links-group">
+                <a href="/legal">法律声明</a>
+                <a href="/privacy">隐私政策声明</a>
+                <a href="/cookies">Cookies</a>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

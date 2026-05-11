@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录记录管理</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <main>
+        <h1>登录记录管理</h1>
+        <form method="GET" action="/admin/login-records" class="filter-form">
+            <label>开始时间 <input type="datetime-local" name="start_time" value="{{ start_time }}"></label>
+            <label>结束时间 <input type="datetime-local" name="end_time" value="{{ end_time }}"></label>
+            <label>IP地址 <input type="text" name="ip_address" value="{{ ip_address }}"></label>
+            <label>状态
+                <select name="status">
+                    <option value="all">全部</option>
+                    <option value="success" {% if status_filter == "success" %}selected{% endif %}>成功</option>
+                    <option value="failed" {% if status_filter == "failed" %}selected{% endif %}>失败</option>
+                </select>
+            </label>
+            <button type="submit">筛选</button>
+        </form>
+        <table class="admin-records">
+            <thead>
+                <tr>
+                    <th>用户</th>
+                    <th>时间</th>
+                    <th>IP地址</th>
+                    <th>设备</th>
+                    <th>状态</th>
+                    <th>原因</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr class="{% if record.is_anomalous %}anomalous{% endif %}">
+                    <td>{{ record.username or "未知" }}</td>
+                    <td>{{ record.login_time.strftime("%Y-%m-%d %H:%M:%S") }}</td>
+                    <td>{{ record.ip_address }}</td>
+                    <td>{{ record.browser }} on {{ record.operating_system }}</td>
+                    <td class="status-{{ record.status }}">{{ record.status }}</td>
+                    <td>{{ record.failure_reason or "" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <nav class="pagination">
+            {% for i in range(1, pagination.total_pages + 1) %}
+            <a href="?page={{ i }}&start_time={{ start_time }}&end_time={{ end_time }}" class="page-link {% if i == pagination.page %}active{% endif %}">{{ i }}</a>
+            {% endfor %}
+        </nav>
+        <a href="/admin">返回管理后台</a>
+    </main>
+</body>
+</html>

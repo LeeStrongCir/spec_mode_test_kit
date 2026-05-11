@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创建LECS主机 - Lee云控制台</title>
+    <link rel="stylesheet" href="/static/css/console.css">
+    <link rel="stylesheet" href="/static/css/lecs-host-create.css">
+</head>
+<body>
+    <div class="console-page">
+        <header class="banner">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                Lee云
+                <span style="margin: 0 8px; color: var(--lc-border-light);">|</span>
+                <strong style="font-weight: 700; font-size: 15px; color: var(--lc-text-primary);">控制台</strong>
+            </div>
+            <div class="banner-links">
+                <div class="user-info">
+                    <a href="/profile">{{ user.username if user else 'admin' }}</a>
+                    <span class="user-avatar">👤</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="console-main lecs-create-main">
+            <div class="lecs-page-header">
+                <h1>创建LECS主机</h1>
+                <a href="/console/lecs-hosts/list" class="btn btn-sm">返回列表</a>
+            </div>
+
+            <form id="lecsCreateForm" novalidate>
+                <div class="create-section">
+                    <h2>基础配置</h2>
+                    <div class="form-row">
+                        <label>计费模式</label>
+                        <div class="radio-group" data-testid="lecs-billing-mode">
+                            <label class="radio-option">
+                                <input type="radio" name="billing_mode" value="subscription" checked>
+                                <span>包年/包月</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="billing_mode" value="on_demand">
+                                <span>按需计费</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <label for="hostnameInput">主机名</label>
+                        <input type="text" id="hostnameInput" data-testid="lecs-hostname-input"
+                               placeholder="支持英文、数字、下划线，长度4-10字符" maxlength="10">
+                        <span class="error-msg" id="hostnameError"></span>
+                    </div>
+                    <div class="form-row">
+                        <label for="usernameInput">用户名</label>
+                        <input type="text" id="usernameInput" data-testid="lecs-username-input"
+                               placeholder="支持英文、数字、特殊字符，长度4-16字符" maxlength="16">
+                        <span class="error-msg" id="usernameError"></span>
+                    </div>
+                    <div class="form-row">
+                        <label for="passwordInput">密码</label>
+                        <input type="password" id="passwordInput" data-testid="lecs-password-input"
+                               placeholder="支持英文、数字、特殊字符，长度8-32字符" maxlength="32">
+                        <span class="error-msg" id="passwordError"></span>
+                    </div>
+                </div>
+
+                <div class="create-section">
+                    <h2>实例配置</h2>
+                    <div class="form-row">
+                        <label>实例类型</label>
+                        <div class="radio-group tabs" data-testid="lecs-instance-type-tabs">
+                            <label class="radio-option tab active" data-type="economy">
+                                <input type="radio" name="instance_type" value="economy" checked>
+                                <span>经济型</span>
+                            </label>
+                            <label class="radio-option tab" data-type="high_performance">
+                                <input type="radio" name="instance_type" value="high_performance">
+                                <span>高性能型</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="spec-grid" id="specGrid"></div>
+                    <span class="error-msg" id="specError"></span>
+                </div>
+
+                <div class="create-section">
+                    <h2>操作系统</h2>
+                    <div class="form-row">
+                        <label for="osSelect">镜像</label>
+                        <select id="osSelect" data-testid="lecs-os-image-selector">
+                            <option value="huawei_euler" selected>Huawei Euler OS</option>
+                            <option value="ubuntu">Ubuntu</option>
+                            <option value="windows">Windows</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="create-section">
+                    <h2>IP配置</h2>
+                    <div class="form-row">
+                        <label>分配方式</label>
+                        <div class="radio-group tabs" data-testid="lecs-ip-mode-tabs">
+                            <label class="radio-option tab active">
+                                <input type="radio" name="ip_mode" value="dhcp" checked>
+                                <span>DHCP 分配</span>
+                            </label>
+                            <label class="radio-option tab">
+                                <input type="radio" name="ip_mode" value="manual">
+                                <span>手工配置</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row manual-ip-fields" id="manualIpFields" style="display:none;">
+                        <label for="ipInput">IP地址</label>
+                        <input type="text" id="ipInput" data-testid="lecs-ip-address-input"
+                               placeholder="例如：192.168.1.100">
+                        <span class="error-msg" id="ipError"></span>
+                        <label for="maskSelect">掩码</label>
+                        <select id="maskSelect" data-testid="lecs-ip-mask-selector">
+                        </select>
+                        <span class="error-msg" id="maskError"></span>
+                    </div>
+                </div>
+
+                <div class="create-section">
+                    <h2>购买时长</h2>
+                    <div class="form-row">
+                        <div class="radio-group" data-testid="lecs-duration-selector">
+                            {% for m in range(1, 10) %}
+                            <label class="radio-option duration">
+                                <input type="radio" name="duration" value="{{ m }}">
+                                <span>{{ m }}个月</span>
+                            </label>
+                            {% endfor %}
+                            <label class="radio-option duration">
+                                <input type="radio" name="duration" value="12">
+                                <span>1年</span>
+                            </label>
+                            <label class="radio-option duration">
+                                <input type="radio" name="duration" value="24">
+                                <span>2年</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cost-bar" id="costBar">
+                    <span>配置费用：</span>
+                    <span class="cost-value" data-testid="lecs-config-price" id="costDisplay">请选择实例规格</span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-primary" data-testid="lecs-buy-submit-button" id="buyButton">立即购买</button>
+                </div>
+            </form>
+        </main>
+
+        <footer class="page-footer">
+            <span>©2026 Leecloud.com 版权所有</span>
+            <div class="footer-links-group">
+                <a href="/legal">法律声明</a>
+                <a href="/privacy">隐私政策声明</a>
+                <a href="/cookies">Cookies</a>
+            </div>
+        </footer>
+    </div>
+
+    <div class="modal-overlay" id="confirmDialog" data-testid="lecs-confirm-dialog" style="display:none;">
+        <div class="modal-content">
+            <h3>确认配置</h3>
+            <div id="confirmSummary"></div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-sm" data-testid="lecs-confirm-cancel-btn" id="confirmCancelBtn">取消</button>
+                <button type="button" class="btn btn-primary btn-sm" data-testid="lecs-confirm-ok-btn" id="confirmOkBtn">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/lecs-hosts.js"></script>
+</body>
+</html>

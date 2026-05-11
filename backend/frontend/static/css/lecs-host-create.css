@@ -1,0 +1,298 @@
+/* ========================================
+   LECS Host Create Page Styles
+   ======================================== */
+
+.lecs-create-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--lc-spacing-xl);
+}
+
+.create-section {
+    background: var(--lc-bg-white);
+    border-radius: 4px;
+    padding: var(--lc-spacing-lg) var(--lc-spacing-xl);
+    margin-bottom: var(--lc-spacing-md);
+    box-shadow: var(--lc-shadow-card);
+}
+
+.create-section h2 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--lc-text-primary);
+    margin-bottom: var(--lc-spacing-lg);
+    padding-bottom: var(--lc-spacing-sm);
+    border-bottom: 1px solid var(--lc-border-light);
+}
+
+.form-row {
+    margin-bottom: var(--lc-spacing-md);
+}
+
+.form-row label {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--lc-text-secondary);
+    margin-bottom: var(--lc-spacing-xs);
+}
+
+.form-row input[type="text"],
+.form-row input[type="password"],
+.form-row select {
+    width: 100%;
+    max-width: 400px;
+    padding: var(--lc-spacing-xs) var(--lc-spacing-sm);
+    border: 1px solid var(--lc-border);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--lc-text-primary);
+    font-family: var(--lc-font);
+    transition: border-color 0.15s;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+    outline: none;
+    border-color: var(--lc-link-blue);
+}
+
+.form-row input.input-error {
+    border-color: var(--lc-red);
+}
+
+.error-msg {
+    display: block;
+    font-size: 12px;
+    color: var(--lc-red);
+    margin-top: 4px;
+    min-height: 16px;
+}
+
+/* Radio groups */
+.radio-group {
+    display: flex;
+    gap: var(--lc-spacing-sm);
+    flex-wrap: wrap;
+}
+
+.radio-group input[type="radio"] {
+    display: none;
+}
+
+.radio-option {
+    display: inline-flex;
+    align-items: center;
+    padding: var(--lc-spacing-xs) var(--lc-spacing-md);
+    border: 1px solid var(--lc-border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--lc-text-secondary);
+    transition: all 0.15s;
+    background: var(--lc-bg-white);
+}
+
+.radio-option input:checked + span {
+    font-weight: 500;
+    color: var(--lc-text-primary);
+}
+
+.radio-option:hover {
+    border-color: var(--lc-btn-hover);
+}
+
+.radio-option.selected,
+.radio-option:has(input:checked) {
+    background: #FFF5F5;
+    border-color: var(--lc-red);
+    color: var(--lc-text-primary);
+}
+
+.radio-group.tabs .radio-option {
+    padding: var(--lc-spacing-xs) var(--lc-spacing-lg);
+    border-bottom: 2px solid transparent;
+    border-radius: 4px 4px 0 0;
+}
+
+.radio-group.tabs .radio-option:has(input:checked) {
+    border-bottom-color: var(--lc-red);
+    background: transparent;
+}
+
+.radio-option.duration {
+    min-width: 60px;
+    text-align: center;
+    justify-content: center;
+}
+
+/* Spec cards grid */
+.spec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--lc-spacing-md);
+}
+
+.spec-card {
+    border: 1px solid var(--lc-border);
+    border-radius: 4px;
+    padding: var(--lc-spacing-md);
+    cursor: pointer;
+    transition: all 0.15s;
+    background: var(--lc-bg-white);
+}
+
+.spec-card:hover {
+    border-color: var(--lc-btn-hover);
+    box-shadow: 0 2px 8px rgba(199, 2, 11, 0.1);
+}
+
+.spec-card.selected {
+    border-color: var(--lc-red);
+    background: #FFF5F5;
+    box-shadow: 0 2px 8px rgba(199, 2, 11, 0.15);
+}
+
+.spec-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--lc-text-primary);
+    margin-bottom: var(--lc-spacing-xs);
+}
+
+.spec-card-details {
+    font-size: 12px;
+    color: var(--lc-text-muted);
+    margin-bottom: var(--lc-spacing-sm);
+    line-height: 1.6;
+}
+
+.spec-card-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--lc-red);
+}
+
+/* Cost bar */
+.cost-bar {
+    background: var(--lc-bg-white);
+    border-radius: 4px;
+    padding: var(--lc-spacing-md) var(--lc-spacing-xl);
+    margin-bottom: var(--lc-spacing-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--lc-shadow-card);
+    font-size: 14px;
+    color: var(--lc-text-secondary);
+}
+
+.cost-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--lc-red);
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: var(--lc-spacing-md);
+}
+
+.btn {
+    padding: var(--lc-spacing-xs) var(--lc-spacing-md);
+    border: 1px solid var(--lc-border);
+    border-radius: 4px;
+    background: transparent;
+    font-size: 13px;
+    color: var(--lc-text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: var(--lc-font);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: var(--lc-red);
+    color: white;
+    border-color: var(--lc-red);
+    padding: 8px 24px;
+}
+
+.btn-primary:hover {
+    background: var(--lc-btn-hover);
+    border-color: var(--lc-btn-hover);
+}
+
+.btn-sm {
+    padding: 2px 10px;
+    font-size: 12px;
+}
+
+/* Modal overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--lc-bg-white);
+    border-radius: 6px;
+    padding: var(--lc-spacing-xl);
+    max-width: 480px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-content h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: var(--lc-spacing-lg);
+}
+
+#confirmSummary {
+    margin-bottom: var(--lc-spacing-lg);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--lc-spacing-xs) 0;
+    font-size: 13px;
+    border-bottom: 1px solid var(--lc-border-light);
+}
+
+.summary-label {
+    color: var(--lc-text-muted);
+}
+
+.summary-value {
+    color: var(--lc-text-primary);
+    font-weight: 500;
+}
+
+.summary-total {
+    font-size: 15px;
+    color: var(--lc-red);
+    font-weight: 700;
+    border-bottom: none;
+    padding-top: var(--lc-spacing-sm);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--lc-spacing-md);
+}

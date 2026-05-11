@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>控制台 - Lee云</title>
+    <link rel="stylesheet" href="/static/css/console.css">
+</head>
+<body>
+    <div class="console-page">
+        <header class="banner">
+            <div class="logo">
+                <span class="logo-icon"></span>
+                Lee云
+                <span style="margin: 0 8px; color: var(--lc-border-light);">|</span>
+                <strong style="font-weight: 700; font-size: 15px; color: var(--lc-text-primary);">控制台</strong>
+                <span class="region-selector">华北-北京四 ▾</span>
+            </div>
+            <div class="banner-links">
+                <a href="/">首页</a>
+                <a href="/resources">资源</a>
+                <a href="/costs">费用</a>
+                <a href="/enterprise">企业</a>
+                <a href="/tools">工具</a>
+                <a href="/tickets">工单</a>
+                <span>🔔</span>
+                <span>❓</span>
+                <span>💬</span>
+                <span>简体</span>
+                <div class="user-info">
+                    <a href="/profile">{{ user.username if user else 'admin' }}_00861234xxx_xx</a>
+                    <span class="user-avatar">👤</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="console-main">
+            <div class="console-tabs">
+                <span class="tab active">总览</span>
+                <span class="tab">安全监控</span>
+                <span class="tab">运维监控</span>
+                <span class="tab">费用与成本</span>
+            </div>
+
+            <div class="overview-cards">
+                <div class="overview-card">
+                    <div class="card-title">全生命周期安全防护</div>
+                    <div class="card-status">安全威胁告警</div>
+                    <div class="card-action"><span class="card-action-link">免费开通</span></div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-title">暂未配置告警</div>
+                    <div class="card-status">资源紧急告警</div>
+                    <div class="card-action"><span class="card-action-link">配置告警</span></div>
+                </div>
+                <div class="overview-card">
+                    <div class="big-number">0</div>
+                    <div class="card-status">待续费</div>
+                </div>
+                <div class="overview-card">
+                    <div class="big-number">0</div>
+                    <div class="card-status">配置提醒</div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-title">未开通</div>
+                    <div class="card-status">优化顾问</div>
+                    <div class="card-action"><span class="card-action-link">去开通</span></div>
+                </div>
+                <div class="overview-card">
+                    <div class="card-title">可用额度</div>
+                    <div class="card-status">¥****</div>
+                    <div class="card-action"><span class="card-action-link">充值</span></div>
+                </div>
+            </div>
+
+            <div class="service-sections">
+                <div class="service-section">
+                    <h3>最近访问 <span class="more-link">当前暂无访问，您可以通过访问相关云服务呈现</span></h3>
+                </div>
+                <div class="service-section">
+                    <h3>我的收藏 <span class="more-link">+ 链接</span></h3>
+                    <div class="shortcuts">
+                        <span class="shortcut-tag">弹性云服务器 ECS</span>
+                        <span class="shortcut-tag">裸金屬服务器 BMS</span>
+                        <span class="shortcut-tag">弹性伸缩 AS</span>
+                        <span class="shortcut-tag">对象存储服务 OBS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="view-section">
+                <div class="view-tabs">
+                    <span class="vtab active">服务视图</span>
+                    <span class="vtab">资源视图</span>
+                </div>
+                <div class="region-filters">
+                    <span class="rf">全部区域 (8)</span>
+                    <span class="rf active">华南-贵阳一 (4)</span>
+                    <span class="rf active">华北-北京四 (4)</span>
+                </div>
+                <div class="sort-group">
+                    <select><option>推荐排序</option></select>
+                    <select><option>全部服务</option></select>
+                </div>
+                <div class="vpc-card">
+                    <div class="vpc-icon">☁</div>
+                    <div class="vpc-info">
+                        <div class="vpc-name">虚拟私有云 VPC</div>
+                        <div class="vpc-details">2 虚拟私有云 · 6 安全组</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dash-card">
+                    <h3>安全监控 <span class="arrow">›</span></h3>
+                    <div class="dash-placeholder">
+                        <p>暂未购买安全云脑</p>
+                        <span class="dash-small-text">当前暂无数据，您可以购买云脑确保业务安全</span>
+                        <button class="dash-action-btn">购买安全云脑</button>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <h3>云监控 <span class="arrow" style="font-size: 12px; margin-left: 4px;">华北-北京四</span> <span class="arrow">›</span></h3>
+                    <div class="dash-placeholder">
+                        <p>暂未配置告警</p>
+                        <span class="dash-small-text">您暂未配置告警，请先进行告警配置</span>
+                        <button class="dash-action-btn">配置告警</button>
+                    </div>
+                </div>
+                <div class="dash-card">
+                    <h3>费用 <span class="arrow">›</span></h3>
+                    <div class="cost-row"><span>可用额度</span><span class="cost-link">提现 汇款认领</span></div>
+                    <div class="cost-value">¥****</div>
+                    <div class="dash-small-text">(现金余额: ¥0.00)</div>
+                    <div class="cost-row"><span>可开票金额 <a class="cost-link">去开票</a></span><span>代金券 <a class="cost-link">去使用</a></span></div>
+                    <div class="cost-value">¥0.00</div>
+                    <div style="display:flex; justify-content:space-between;"><span class="cost-value" style="font-size:18px;">0</span><span class="dash-small-text">代金券</span></div>
+                </div>
+                <div class="dash-card">
+                    <h3>成本 <span class="arrow">›</span></h3>
+                    <div class="cost-row"><span>月初至今成本</span><span class="dash-small-text">环比上月 0.00%</span></div>
+                    <div class="cost-value">¥0.00</div>
+                    <div class="cost-row" style="margin-top:12px;"><span>月末预测成本</span><span class="dash-small-text">环比上月 0.00%</span></div>
+                    <div class="cost-note">数据不足，需要至少3个月消费数据才能进行预测</div>
+                </div>
+            </div>
+
+            <div class="bottom-welcome">
+                <div class="bottom-card">
+                    <h4>欢迎来到Lee云 <span class="more">帮助中心 ›</span></h4>
+                    <p>Lee云为您提供安全、稳定、可信赖的云计算服务平台。</p>
+                </div>
+                <div class="bottom-card">
+                    <h4>产品新特性 <span class="more">›</span></h4>
+                    <p>了解Lee云最新产品动态和功能更新。</p>
+                </div>
+                <div class="bottom-card">
+                    <h4>开发者 <span class="more">›</span></h4>
+                    <p>API文档、SDK工具、开发者社区。</p>
+                </div>
+            </div>
+        </main>
+
+        <div class="right-sidebar">
+            <span class="sidebar-icon">❓</span>
+            <span class="sidebar-icon">📋</span>
+            <span class="sidebar-icon">😊</span>
+            <span class="sidebar-icon">⚙</span>
+        </div>
+
+        <footer class="page-footer">
+            <span>©2026 Leecloud.com 版权所有</span>
+            <div class="footer-links-group">
+                <a href="/legal">法律声明</a>
+                <a href="/privacy">隐私政策声明</a>
+                <a href="/cookies">Cookies</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+    const serviceCatalog = [
+            { category: '控制台', items: [
+                { name: 'LECS主机', action: '计算', type: 'ecs', url: '/console/lecs-hosts/list' },
+                { name: '弹性云服务器 ECS', action: '计算', type: 'ecs' },
+                { name: '裸金属服务器 BMS', action: '计算', type: 'ecs' },
+                { name: '弹性伸缩 AS', action: '计算', type: 'ecs' },
+                { name: 'Flexus应用服务器L实例', action: 'Flexus云服务', type: 'flexus' },
+                { name: 'Flexus云服务器X实例', action: 'Flexus云服务', type: 'flexus' },
+                { name: '交换数据空间 EDS', action: '大数据', type: 'data' },
+                { name: '区块链服务 BCS', action: '区块链', type: 'blockchain' },
+                { name: '弹性文件服务 SFS', action: '存储', type: 'storage' },
+                { name: '虚拟私有云 VPC', action: '网络', type: 'network' },
+                { name: '对象存储服务 OBS', action: '存储', type: 'storage' },
+            ]},
+            { category: '快捷操作', items: [
+                { name: '续费', action: '弹性云服务器 ECS' },
+                { name: '删除', action: '弹性云服务器 ECS' },
+                { name: '开机', action: '弹性云服务器 ECS' },
+                { name: '退订', action: '弹性云服务器 ECS' },
+                { name: '扩容', action: '弹性云服务器 ECS' },
+                { name: '关机', action: '弹性云服务器 ECS' },
+            ]},
+            { category: '文档', items: [
+                { name: '什么是弹性云服务器?', action: '弹性云服务器 ECS' },
+                { name: '无法登录到Windows云服务器怎么办?', action: '弹性云服务器 ECS' },
+                { name: '网站无法访问怎么办?', action: '弹性云服务器 ECS' },
+                { name: '创建ECS高频场景示例', action: '弹性云服务器 ECS' },
+                { name: 'Ping不通或丢包时如何进行链路测试?', action: '弹性云服务器 ECS' },
+                { name: '快速购买ECS', action: '弹性云服务器 ECS' },
+            ]},
+        ];
+
+        const serviceIcons = {
+            ecs: { bg: '#E87040', svg: '<rect x="3" y="5" width="14" height="10" rx="1"/><line x1="5" y1="8" x2="15" y2="8"/><line x1="5" y1="12" x2="12" y2="12"/>' },
+            flexus: { bg: '#E87040', svg: '<circle cx="10" cy="10" r="6"/><circle cx="10" cy="10" r="2"/>' },
+            data: { bg: '#43AE3E', svg: '<ellipse cx="10" cy="6" rx="6" ry="3"/><ellipse cx="10" cy="14" rx="6" ry="3"/><line x1="4" y1="6" x2="4" y2="14"/><line x1="16" y1="6" x2="16" y2="14"/>' },
+            blockchain: { bg: '#2F54EB', svg: '<rect x="3" y="3" width="6" height="6" rx="1"/><rect x="11" y="3" width="6" height="6" rx="1"/><rect x="3" y="11" width="6" height="6" rx="1"/><rect x="11" y="11" width="6" height="6" rx="1"/>' },
+            storage: { bg: '#E8A040', svg: '<path d="M5 4h10a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2z"/><path d="M3 9h14"/>' },
+            network: { bg: '#2F54EB', svg: '<circle cx="10" cy="6" r="3"/><line x1="10" y1="9" x2="6" y2="15"/><line x1="10" y1="9" x2="14" y2="15"/><circle cx="6" cy="15" r="2"/><circle cx="14" cy="15" r="2"/>' },
+        };
+
+        const defaultIcon = { bg: '#999', svg: '<circle cx="10" cy="10" r="6"/>' };
+
+        function getServiceIcon(type) {
+            return serviceIcons[type] || defaultIcon;
+        }
+    </script>
+</body>
+</html>
